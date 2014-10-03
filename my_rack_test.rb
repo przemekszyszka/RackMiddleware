@@ -24,4 +24,13 @@ class MyRackTest < Minitest::Test
   def test_x_retelimit_limit_header_has_value_specified
     assert_equal 60, @middleware.call({})[1]["X-RateLimit-Limit"]
   end
+
+  def test_header_has_x_retelimit_remaining
+    assert @middleware.call({})[1].has_key?("X-RateLimit-Remaining")
+  end
+
+  def test_x_retelimit_remaining_value_decreses
+    assert_equal 59, @middleware.call({})[1]["X-RateLimit-Remaining"]
+    assert_equal 58, @middleware.call({})[1]["X-RateLimit-Remaining"]
+  end
 end
