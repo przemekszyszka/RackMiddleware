@@ -3,7 +3,7 @@ class App
     [
       "200",
       {"Content-Type" => "text-html"},
-      ["Test \n"]
+      ["Test"]
     ]
   end
 end
