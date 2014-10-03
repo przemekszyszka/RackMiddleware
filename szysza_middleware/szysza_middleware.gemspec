@@ -5,7 +5,7 @@ require 'szysza_middleware/version'
 
 Gem::Specification.new do |spec|
   spec.name          = "szysza_middleware"
-  spec.version       = SzyszaMiddleware::VERSION
+  spec.version       = "1.0.0"
   spec.authors       = ["Przemysław Szyszka"]
   spec.email         = ["przemeklo@o2.pl"]
   spec.summary       = %q{TODO: Write a short summary. Required.}
