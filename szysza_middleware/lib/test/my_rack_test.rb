@@ -9,7 +9,7 @@ class MyRackTest < Minitest::Test
   include Rack::Test::Methods
 
   def app
-    middleware = Middleware.new(App.new, { "limit" => 60 })
+    middleware = Middleware.new(App.new, { limit: 60 })
   end
 
   def setup
