@@ -37,4 +37,13 @@ class MyRackTest < Minitest::Test
     get "/"
     assert_equal 58, last_response.header["X-RateLimit-Remaining"]
   end
+
+  def test_response_returns_too_many_requests_error
+    60.times do
+      get "/"
+    end
+
+    assert_equal 429, last_response.status
+    assert_equal "Too Many Requests", last_response.body
+  end
 end
