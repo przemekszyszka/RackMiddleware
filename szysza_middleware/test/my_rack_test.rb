@@ -2,8 +2,8 @@ require "rubygems"
 require "rack/test"
 require "timecop"
 require 'minitest/autorun'
-require './szysza_middleware/lib/app.rb'
-require './szysza_middleware/lib/middleware.rb'
+require './szysza_middleware/app.rb'
+require './szysza_middleware/middleware.rb'
 
 
 class MyRackTest < Minitest::Test
