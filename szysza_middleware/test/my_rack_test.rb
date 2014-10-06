@@ -62,4 +62,15 @@ class MyRackTest < Minitest::Test
     get "/"
     assert_equal 59, last_response.header["X-RateLimit-Remaining"]
   end
+
+  def test_separated_limit_of_requests_for_each_ip
+    get "/", {}, "REMOTE_ADDR" => "10.0.0.1"
+    get "/", {}, "REMOTE_ADDR" => "10.0.0.1"
+
+    assert_equal 58, last_response.header["X-RateLimit-Remaining"]
+
+    get "/", {}, "REMOTE_ADDR" => "10.0.0.2"
+
+    assert_equal 59, last_response.header["X-RateLimit-Remaining"]
+  end
 end
