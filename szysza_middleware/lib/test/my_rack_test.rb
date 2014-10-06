@@ -1,5 +1,6 @@
 require "rubygems"
 require "rack/test"
+require "timecop"
 require 'minitest/autorun'
 require './szysza_middleware/lib/app.rb'
 require './szysza_middleware/lib/middleware.rb'
@@ -9,7 +10,7 @@ class MyRackTest < Minitest::Test
   include Rack::Test::Methods
 
   def app
-    middleware = Middleware.new(App.new, { limit: 60 })
+    middleware = Middleware.new(App.new, { limit: 60, reset_in: 3600 })
   end
 
   def setup
@@ -45,5 +46,20 @@ class MyRackTest < Minitest::Test
 
     assert_equal 429, last_response.status
     assert_equal "Too Many Requests", last_response.body
+  end
+
+  def test_number_of_possible_requests_is_reseted
+    current_time = Time.now
+
+    19.times do
+      get "/"
+    end
+
+    assert_equal 40, last_response.header["X-RateLimit-Remaining"]
+
+    Timecop.travel(current_time + 3600)
+
+    get "/"
+    assert_equal 59, last_response.header["X-RateLimit-Remaining"]
   end
 end
